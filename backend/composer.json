@@ -1,0 +1,28 @@
+{
+    "name": "rh/school_management",
+    "type": "project",
+    "description": "This is Description",
+    "keywords": [],
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Rahat Hossain",
+            "email": "rahat1470.com@gmail.com",
+            "homepage": "https://mdrahathossain.com",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+        "php": ">=8.0.0",
+        "phpmailer/phpmailer": "^6.8",
+        "swiftmailer/swiftmailer": "6.0",
+        "firebase/php-jwt": "^6.5"
+    },
+    "autoload": {
+        "classmap": [],
+        "psr-4": {
+            "App\\": "app//",
+            "Package\\": "package//"
+        }
+    }
+}
