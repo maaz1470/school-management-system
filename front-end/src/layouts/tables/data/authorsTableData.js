@@ -64,29 +64,24 @@ export default function data() {
     });
     return () => setSessions([]);
   },[])
+  let rows = {};
   if(loading){
     return <h1>Loading...</h1>
   }
 
-  const h = [
-    {
-      name: <Title name="Rahat Hossain" />,
-      action: (
-        <MDTypography component="a" href="#" variant="caption" color="text" fontWeight="medium">
-          Edit
-        </MDTypography>
-      ),
-    },
-    {
-      name: <Title name="Rahat Hossain" />,
-      action: (
-        <MDTypography component="a" href="#" variant="caption" color="text" fontWeight="medium">
-          Edit
-        </MDTypography>
-      ),
-    }
-  ]
+  rows = 
+    sessions.map(el => {
+      return {
+        name: <Title name={el.name} />,
+        action: (
+          <MDTypography component="a" href="#" variant="caption" color="text" fontWeight="medium">
+            Edit
+          </MDTypography>
+        ),
+      }
+    })
 
+    console.log(rows)
 
   return {
     columns: [
@@ -94,6 +89,6 @@ export default function data() {
       { Header: "Action", accessor: "action", align: "center" },
     ],
 
-    
+    rows
   };
 }
