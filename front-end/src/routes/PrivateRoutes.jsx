@@ -34,9 +34,6 @@ export default function PrivateRoutes(){
     },[])
 
 
-    axios.interceptors.response.use(undefined,function axiosRetryInterceptor(error){
-        console.log(error)
-    })
 
     if(loading){
         return <h1>Loading...</h1>;

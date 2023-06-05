@@ -48,6 +48,9 @@ import Profile from "layouts/profile";
 // @mui icons
 import Icon from "@mui/material/Icon";
 import Depertment from "layouts/department";
+import AddDepertment from "layouts/department/AddDepertment";
+import Session from "layouts/session";
+import AddSession from "layouts/session/AddSession";
 
 const routes = [
   {
@@ -69,7 +72,20 @@ const routes = [
   {
     key: "add_depertment",
     route: "/add-depertment",
-    component: <Depertment />,
+    component: <AddDepertment />,
+  },
+  {
+    type: "collapse",
+    name: "Session",
+    key: "session",
+    icon: <Icon fontSize="small">category</Icon>,
+    route: "/session",
+    component: <Session />,
+  },
+  {
+    key: "add-session",
+    route: "/add-session",
+    component: <AddSession />,
   },
   {
     type: "collapse",
