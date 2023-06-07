@@ -32,6 +32,7 @@ import team2 from "assets/images/team-2.jpg";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import Swal from "sweetalert2";
+import { Link } from "react-router-dom";
 // import team3 from "assets/images/team-3.jpg";
 // import team4 from "assets/images/team-4.jpg";
 
@@ -73,14 +74,23 @@ export default function data() {
     return ({
       name: <Title name={el.name} />,
       action: (
-        <MDTypography component="a" href="#" variant="caption" color="text" fontWeight="medium">
-          Edit
-        </MDTypography>
+        <>
+          <Link to={`/edit/${el.id}`}>
+            <MDTypography component="span" variant="caption" color="text" fontWeight="medium" style={{
+              marginRight: '5px',
+              cursor: 'pointer'
+            }}>Edit</MDTypography>
+          </Link>
+            
+          <MDTypography component="span" variant="caption" color="text" fontWeight="medium" style={{
+            cursor: 'pointer'
+          }}>
+            Delete
+          </MDTypography>
+        </>
       ),
     })
   })
-
-  console.log(rows)
   
 
 

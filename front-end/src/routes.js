@@ -51,6 +51,7 @@ import Depertment from "layouts/department";
 import AddDepertment from "layouts/department/AddDepertment";
 import Session from "layouts/session";
 import AddSession from "layouts/session/AddSession";
+import EditSession from "layouts/session/EditSession";
 
 const routes = [
   {
@@ -86,6 +87,11 @@ const routes = [
     key: "add-session",
     route: "/add-session",
     component: <AddSession />,
+  },
+  {
+    key: "edit-session",
+    route: "/edit/:id",
+    component: <EditSession />,
   },
   {
     type: "collapse",

@@ -11,13 +11,13 @@ import { Grid } from "@mui/material";
 import Card from "@mui/material/Card";
 import MDTypography from "components/MDTypography";
 import DataTable from "examples/Tables/DataTable";
-import authorsTableData from "layouts/tables/data/authorsTableData";
+import sessionsTableData from "layouts/tables/data/sessionsTableData";
 import MDButton from "components/MDButton";
 import Icon from "@mui/material/Icon";
 // import projectsTableData from "layouts/tables/data/projectsTableData";
 /* eslint-disable prettier/prettier */
 export default function Session(){
-    const { columns, rows } = authorsTableData();
+    const { columns, rows } = sessionsTableData();
 //   const { columns: pColumns, rows: pRows } = projectsTableData();
     return (
         <>

@@ -101,12 +101,14 @@ class Route{
         }
         // Callback function
         if (is_callable($callback)) {
-            if(isset($_POST) && is_callable($callback)){
-                $callback((object)$_POST);
+            
+            if((isset($_SERVER['REQUEST_METHOD']) === 'POST')){
+                $callback((object)$_SERVER);
+                exit();
+            }else{
+                call_user_func_array($callback, [5]);
                 exit();
             }
-            call_user_func_array($callback, $parameters);
-            exit();
         }
         include_once __DIR__ . "/$path_to_include";
         exit();

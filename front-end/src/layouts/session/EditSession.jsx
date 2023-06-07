@@ -12,20 +12,45 @@ import MDTypography from "components/MDTypography";
 import MDButton from "components/MDButton";
 // import Icon from "@mui/material/Icon";
 import MDInput from "components/MDInput";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import axios from "axios";
 import Swal from "sweetalert2";
-export default function AddSession(){
+import { useParams } from "react-router-dom";
+export default function EditSession(){
     const [sessionInfo, setSessionInfo] = useState({
         name: ''
     });
 
+    const [loading, setLoading] = useState(true);
+
+    const {id} = useParams();
+    useEffect(() => {
+        axios.get(`/edit-session/${id}`).then(response => {
+            if(response){
+                // if(response.data.status === 200){
+                //     setSessionInfo({
+                //         ...sessionInfo,
+                //         name: response.data.session.name ?? ''
+                //     })
+                // }
+                console.log(response)
+            }
+            setLoading(false)
+        })
+
+        return () => setSessionInfo({
+            name: ''
+        })
+    },[])
     const handleChange = (e) => {
         setSessionInfo({
             ...sessionInfo,
             [e.target.name]: e.target.value
         })
     }
+
+    
+
     const sessionSubmit = (e) => {
         e.preventDefault();
 
@@ -41,6 +66,10 @@ export default function AddSession(){
                 }
             }
         })
+    }
+
+    if(loading){
+        return <h1>Loading...</h1>
     }
 
     return (

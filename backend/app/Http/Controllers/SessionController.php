@@ -64,4 +64,8 @@ class SessionController{
             echo json_encode(['status'  => 401,'message'    => `We cannot fetch data from {$table_name} table`]);
         }
     }
+
+    public static function editSession($id){
+        echo json_encode($id);
+    }
 }

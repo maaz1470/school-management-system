@@ -43,12 +43,17 @@
         SessionController::class::getSession();
     });
 
+    Route::get('/edit-session/$id',function($id){
+        // SessionController::class::editSession($id);
+        print_r($id);
+    });
+
 
     
 
 
     Route::get('/something/$id',function($id){
-        http_response_code(404);
+        print_r($id);
     });
 
     Route::any('/404',function(){
