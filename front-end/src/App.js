@@ -13,9 +13,9 @@ import useUser from "hooks/useUser";
 export default function App(){
   return (
     <Routes>
-
+        
+        <Route path="/" element={<Navigate to="/authentication/sign-in" />} />
           <Route path="/" element={<Main />}>
-            <Route path="/" element={<Navigate to="/authentication/sign-in" />} />
             <Route path="/" element={<PrivateRoutes />}>
               {routes.map((el) => <Route exact path={el.route} element={el.component} key={el.key} />)}
             </Route>
