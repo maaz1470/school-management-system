@@ -36,6 +36,10 @@ export default function AddSession(){
             if(response){
                 if(response.data.status === 200){
                     Swal.fire('Success',response.data.message,'success');
+                    setSessionInfo({
+                        ...sessionInfo,
+                        name: ''
+                    })
                 }else if(response.data.status === 401){
                     Swal.fire('Error',response.data.message,'error');
                 }

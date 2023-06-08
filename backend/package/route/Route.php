@@ -102,11 +102,11 @@ class Route{
         // Callback function
         if (is_callable($callback)) {
             
-            if((isset($_SERVER['REQUEST_METHOD']) === 'POST')){
-                $callback((object)$_SERVER);
+            if(($_SERVER['REQUEST_METHOD'] == 'POST')){
+                $callback((object)$_POST);
                 exit();
             }else{
-                call_user_func_array($callback, [5]);
+                call_user_func_array($callback, $parameters);
                 exit();
             }
         }

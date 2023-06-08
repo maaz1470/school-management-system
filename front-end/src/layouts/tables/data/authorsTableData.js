@@ -64,30 +64,11 @@ export default function data() {
     });
     return () => setSessions([]);
   },[])
-<<<<<<< HEAD
-  let rows = {}
-=======
   let rows = {};
->>>>>>> 2be205cda070b7118c68b46d2833c6fd63d0f913
   if(loading){
     return <h1>Loading...</h1>
   }
-
-<<<<<<< HEAD
-  rows = sessions.map(el => {
-    return ({
-      name: <Title name={el.name} />,
-      action: (
-        <MDTypography component="a" href="#" variant="caption" color="text" fontWeight="medium">
-          Edit
-        </MDTypography>
-      ),
-    })
-  })
-
-  console.log(rows)
   
-=======
   rows = 
     sessions.map(el => {
       return {
@@ -99,9 +80,7 @@ export default function data() {
         ),
       }
     })
->>>>>>> 2be205cda070b7118c68b46d2833c6fd63d0f913
 
-    console.log(rows)
 
   return {
     columns: [

@@ -15,7 +15,7 @@ import MDInput from "components/MDInput";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import Swal from "sweetalert2";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 export default function EditSession(){
     const [sessionInfo, setSessionInfo] = useState({
         name: ''
@@ -23,17 +23,25 @@ export default function EditSession(){
 
     const [loading, setLoading] = useState(true);
 
+    const navigate = useNavigate();
+
     const {id} = useParams();
     useEffect(() => {
         axios.get(`/edit-session/${id}`).then(response => {
             if(response){
-                // if(response.data.status === 200){
-                //     setSessionInfo({
-                //         ...sessionInfo,
-                //         name: response.data.session.name ?? ''
-                //     })
-                // }
-                console.log(response)
+                if(response.data.status === 200){
+                    setSessionInfo({
+                        ...sessionInfo,
+                        name: response.data.session.name ?? ''
+                    })
+                }else if(response.data.status === 404){
+                    Swal.fire('404',response.data.message,'error');
+                    navigate('/session',{
+                        replace: true
+                    })
+
+                }
+                // console.log(response)
             }
             setLoading(false)
         })
@@ -56,13 +64,18 @@ export default function EditSession(){
 
         const data = new FormData();
         data.append('name',sessionInfo.name);
+        data.append('id',id);
 
-        axios.post('/add-session',data).then(response => {
+        axios.post('/update-session',data).then(response => {
             if(response){
                 if(response.data.status === 200){
                     Swal.fire('Success',response.data.message,'success');
                 }else if(response.data.status === 401){
                     Swal.fire('Error',response.data.message,'error');
+                }else if(response.data.status === 404){
+                    Swal.fire('404',response.data.message,'error');
+                }else{
+                    Swal.fire('Error','Something went wrong. Please try again.','error');
                 }
             }
         })

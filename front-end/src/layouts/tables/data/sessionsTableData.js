@@ -65,6 +65,23 @@ export default function data() {
     });
     return () => setSessions([]);
   },[])
+
+  const deleteSession = (e,id) => {
+    e.preventDefault();
+    
+    axios.get(`/session-delete/${id}`).then(response => {
+      if(response){
+        if(response.data.status === 200){
+          Swal.fire('Success', response.data.message,'success');
+          e.target.closest('tr').remove()
+        }else if(response.data.status === 404){
+          Swal.fire('404',response.data.message,'error')
+        }else if(response.data.status === 401){
+          Swal.fire('Error',response.data.message,'error')
+        }
+      }
+    })
+  }
   let rows = {}
   if(loading){
     return <h1>Loading...</h1>
@@ -82,7 +99,7 @@ export default function data() {
             }}>Edit</MDTypography>
           </Link>
             
-          <MDTypography component="span" variant="caption" color="text" fontWeight="medium" style={{
+          <MDTypography onClick={(e) => deleteSession(e,el.id)} component="span" variant="caption" color="text" fontWeight="medium" style={{
             cursor: 'pointer'
           }}>
             Delete

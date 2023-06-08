@@ -66,6 +66,122 @@ class SessionController{
     }
 
     public static function editSession($id){
-        echo json_encode($id);
+        SessionController::class::initialization();
+        try{
+            $conn = self::$db->connect;
+            $tableName = self::$table_name;
+            $table_id = $id;
+            $results = $conn->prepare("SELECT * FROM $tableName WHERE id=:id");
+            $results->bindParam(':id',$id,PDO::PARAM_INT);
+            $results->execute();
+            $session = $results->fetch();
+            
+            if($session){
+                echo json_encode([
+                    'status'  => 200,
+                    'session'   => $session
+                ]);
+                exit();
+            }else{
+                echo json_encode([
+                    'status'    => 404,
+                    'message'   => 'Data not found'
+                ]);
+                exit();
+            }
+        }catch(Exception $e){
+            echo json_encode(['status'=>401,'message'=>$e->getMessage()]);
+        }
+    }
+
+    public static function updateSession($request){
+        SessionController::class::initialization();
+
+        try{
+            $name = $request->name;
+            $id = $request->id;
+            if($name != '' && $id != ''){
+                $tableName = self::$table_name;
+
+                $conn = self::$db->connect;
+
+                $check_session = $conn->prepare("SELECT * FROM sessions WHERE id=:id");
+
+                $check_session->bindParam(':id',$id,PDO::PARAM_INT);
+                $check_session->execute();
+                if(count($check_session->fetchAll()) == 1){
+                    $session = $conn->prepare("UPDATE $tableName SET name=:name WHERE id=:id");
+                    $session->bindParam(':name',$name,PDO::PARAM_STR);
+                    $session->bindParam(':id',$id,PDO::PARAM_INT);
+                    if($session->execute()){
+                        echo json_encode([
+                            'status'    => 200,
+                            'message'   => 'Session update successfully.'
+                        ]); 
+                        exit();
+                    }else{
+                        echo json_encode([
+                            'status'    => 401,
+                            'message'   => 'Something went wrong. Session update failed.'
+                        ]);
+                        exit();
+                    }
+                }else{
+                    echo json_encode([
+                        'status'    => 404,
+                        'message'   => 'Session not found.'
+                    ]);
+                    exit();
+                }
+            }else{
+                throw new Exception("All fieled is required.");
+            }
+
+        }catch(Exception $e){
+            echo json_encode([
+                'status'    => 401,
+                'message'   => $e->getMessage()
+            ]);
+        }
+    }
+
+
+    public static function deleteSession($id){
+        SessionController::class::initialization();
+        try{
+            $conn = self::$db->connect;
+            $tableName = self::$table_name;
+            $check_session = $conn->prepare("SELECT id FROM $tableName WHERE id=:id");
+            $check_session->bindParam(':id',$id,PDO::PARAM_INT);
+            $check_session->execute();
+            if($check_session->rowCount() === 1){
+                $session = $conn->prepare("DELETE FROM $tableName WHERE id=:session_id");
+                $session->bindParam(':session_id',$id,PDO::PARAM_INT);
+                if($session->execute()){
+                    echo json_encode([
+                        'status'    => 200,
+                        'message'   => 'Session Delete successfully'
+                    ]);
+                    exit();
+                }else{
+                    echo json_encode([
+                        'status'    => 401,
+                        'message'   => 'Something went wrong. Session is not deleted'
+                    ]);
+                    exit();
+                }
+            }else{
+                echo json_encode([
+                    'status'    => 404,
+                    'message'   => 'Session not found'
+                ]);
+            }
+        }catch(Exception $e){
+            echo json_encode([
+                'status'    => 401,
+                'message'   => $e->getMessage()
+            ]);
+            exit();
+        }
     }
 }

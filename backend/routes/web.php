@@ -5,7 +5,8 @@
     use Package\Route\Route;
     use App\Http\Controllers\HomeController;
     use App\Http\Controllers\CheckController;
-    use App\Http\Controllers\SessionController;
+use App\Http\Controllers\DepertmentController;
+use App\Http\Controllers\SessionController;
     Route::initialize();
 
 
@@ -35,6 +36,9 @@
     //     }
     // });
 
+    
+    // Session Routes
+
     Route::post('/add-session',function($post){
         SessionController::class::addSession($post);
     });
@@ -44,8 +48,24 @@
     });
 
     Route::get('/edit-session/$id',function($id){
-        // SessionController::class::editSession($id);
-        print_r($id);
+        SessionController::class::editSession($id);
+        // print_r($id);
+    });
+
+    Route::post('/update-session',function($post){
+        SessionController::class::updateSession($post);
+    });
+
+    Route::get('/session-delete/$id',function($id){
+        SessionController::class::deleteSession($id);
+    });
+
+
+
+    // Depertment Routes
+
+    Route::get('/get-depertments',function(){
+        DepertmentController::class::getDepertments();
     });
 
 
