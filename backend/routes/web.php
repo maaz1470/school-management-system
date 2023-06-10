@@ -68,6 +68,10 @@ use App\Http\Controllers\SessionController;
         DepertmentController::class::getDepertments();
     });
 
+    Route::post('/add-depertment',function($post){
+        DepertmentController::class::addDepertment($post);
+    });
+
 
     
 
