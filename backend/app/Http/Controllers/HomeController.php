@@ -1,7 +1,8 @@
 <?php 
     namespace App\Http\Controllers;
     use App\Database\Connect;
-    use Exception;
+use App\Http\Model\Model;
+use Exception;
     use PDO;
     use PHPMailer\PHPMailer\PHPMailer;
     use PHPMailer\PHPMailer\SMTP;
@@ -13,6 +14,15 @@ class HomeController{
     public static function initialization(){
         $db = new Connect();
         self::$db = $db;
+    }
+
+    private static $tableName = 'admins';
+    
+    protected static function createTable(){
+        self::initialization();
+        $connection = self::$db->connect;
+        $tableName = self::$tableName;
+        return Model::createTable($connection,$tableName,"name VARCHAR(255) NOT NULL,email VARCHAR(255) NOT NULL UNIQUE,password VARCHAR(255) NOT NULL,verify TINYINT(1) DEFAULT 0 NULL,role TINYINT(1) DEFAULT 0");
     }
 
 
@@ -40,23 +50,7 @@ class HomeController{
                         $conn = self::$db->connect;
                         if($exist_table->rowCount() == 0){
                             
-                            try{
-                                $query = "CREATE TABLE $table_name (
-                                    id INT(100) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-                                    name VARCHAR(255) NOT NULL,
-                                    email VARCHAR(255) NOT NULL UNIQUE,
-                                    password VARCHAR(255) NOT NULL,
-                                    verify TINYINT(1) DEFAULT 0 NULL,
-                                    role TINYINT(1) DEFAULT 0
-                                )";
-                                $create_table = self::$db->connect->prepare($query);
-                                if(!$create_table->execute()){
-                                    throw new Exception("Table is not created.");
-                                }
-                            }catch(Exception $e){
-                                echo json_encode(['status'=>401,'message' => $e->getMessage()]);
-                                exit();
-                            }
+                            HomeController::class::createTable();
                             
     
                         }
@@ -160,6 +154,8 @@ class HomeController{
 
     public static function userLogin($request){
         HomeController::class::initialization();
+        
+        
         $error = '';
         if($request->email != ''){
             if(filter_var($request->email,FILTER_VALIDATE_EMAIL)){
@@ -170,6 +166,9 @@ class HomeController{
                     $password = $request->password;
 
                     $conn = self::$db->connect;
+
+                    HomeController::class::createTable();
+
                     
                     try{
                         $check_email = $conn->prepare("SELECT id,email,password FROM admins WHERE email=:email");

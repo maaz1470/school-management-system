@@ -18,6 +18,7 @@ import FormControl from "@mui/material/FormControl";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import Swal from "sweetalert2";
+import { useParams } from "react-router-dom";
 
 export default function AddDepertment(){
 
@@ -42,6 +43,8 @@ export default function AddDepertment(){
         })
     }
 
+    const {id} = useParams();
+
     useEffect(() => {
         axios.get('/get-sessions').then(response => {
             if(response){
@@ -53,22 +56,39 @@ export default function AddDepertment(){
                 setLoading(false)
             }
         })
+
+        return () => setSession([])
     },[])
+
+    useEffect(() => {
+        axios.get(`/depertment/edit/${id}`).then(response => {
+            if(response){
+                if(response.data.status === 200){
+                    setDepertment({
+                        ...depertment,
+                        name: response.data.depertment.name ?? '',
+                        session: response.data.depertment.session ?? ''
+                    })
+                }
+            }
+        });
+
+        return () => setDepertment({
+            name: '',
+            session: ''
+        })
+    },[id])
 
     const depertmentSubmit = (e) => {
         e.preventDefault();
         const data = new FormData();
         data.append('name',depertment.name)
         data.append('session',depertment.session)
-
-        axios.post('/add-depertment',data).then(response => {
+        data.append('id',id)
+        axios.post('/update-depertment',data).then(response => {
             if(response){
                 if(response.data.status === 200){
                     Swal.fire('Success',response.data.message,'success');
-                    setDepertment({
-                        ...depertment,
-                        name: ''
-                    })
                 }else if(response.data.status === 401){
                     Swal.fire('Error',response.data.message,'error');
                 }else{

@@ -11,6 +11,7 @@ import routes from "routes";
 import PrivateRoutes from "routes/PrivateRoutes";
 import useUser from "hooks/useUser";
 export default function App(){
+  console.log(useUser())
   return (
     <Routes>
         

@@ -9,4 +9,5 @@ class Controller{
         $db = new Connect;
         self::$db = $db;
     }
+
 }

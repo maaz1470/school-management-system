@@ -24,7 +24,7 @@ export default function useUser(){
         return () => setUser(false)
     },[])
     if(loading){
-        return <h1>Loading...</h1>
+        return undefined;
     }
     return user;
 }

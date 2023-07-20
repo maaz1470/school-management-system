@@ -34,7 +34,6 @@ export default function PrivateRoutes(){
     },[])
 
 
-
     if(loading){
         return <h1>Loading...</h1>;
     }

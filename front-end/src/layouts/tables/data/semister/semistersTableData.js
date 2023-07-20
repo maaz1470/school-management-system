@@ -11,7 +11,7 @@ import { Link } from "react-router-dom";
 
 export default function data() {
 
-    const [sessions, setSessions] = useState([]);
+    const [semister, setSemister] = useState([]);
     // eslint-disable-next-line no-unused-vars
     const [loading, setLoading] = useState(false)
     const Title = ({ name }) => (
@@ -27,18 +27,20 @@ export default function data() {
     );
   
     useEffect(() => {
-      axios.get('/get-depertments').then(response => {
+      axios.get('/semister/get-all').then(response => {
         if(response){
           if(response.data.status === 200){
-            setSessions(response.data.depertments)
+            setSemister(response.data.semisters)
           }else if(response.data.status === 401){
             Swal.fire('Error',response.data.message,'error');
           }
           // setLoading(false)
         }
       });
-      return () => setSessions([]);
+      return () => setSemister([]);
     },[])
+
+    console.log(semister)
   
     const deleteDepertment = (e,id) => {
       e.preventDefault();
@@ -63,7 +65,7 @@ export default function data() {
       return <h1>Loading...</h1>
     }
   
-    rows = sessions.map(el => {
+    rows = semister.map(el => {
       return ({
         name: <Title name={el.name} />,
         action: (

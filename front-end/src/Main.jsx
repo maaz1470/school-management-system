@@ -63,8 +63,8 @@ import brandDark from "assets/images/logo-ct-dark.png";
 // import SignIn from './layouts/authentication/sign-in'
 import axios from "axios";
 import PrivateRoutes from "routes/PrivateRoutes";
-
-axios.defaults.baseURL = 'http://localhost:8000'
+import { homeUrl } from "./hooks/useUrl";
+axios.defaults.baseURL = homeUrl
 // axios.defaults.headers.post['Content-Type'] = 'application/json';
 // axios.defaults.headers.post['Accept'] = 'application/json';
 

@@ -5,8 +5,11 @@
     use Package\Route\Route;
     use App\Http\Controllers\HomeController;
     use App\Http\Controllers\CheckController;
-use App\Http\Controllers\DepertmentController;
+    use App\Http\Controllers\DepertmentController;
+use App\Http\Controllers\SemisterController;
 use App\Http\Controllers\SessionController;
+
+
     Route::initialize();
 
 
@@ -71,6 +74,31 @@ use App\Http\Controllers\SessionController;
     Route::post('/add-depertment',function($post){
         DepertmentController::class::addDepertment($post);
     });
+
+    Route::get('/depertment-delete/$id',function($id){
+        DepertmentController::class::deleteDepertment($id);
+    });
+
+    Route::get('/depertment/edit/$id',function($id){
+        DepertmentController::class::editDepertment($id);
+    });
+
+    Route::post('/update-depertment',function($data){
+        DepertmentController::class::updateDepertment($data);
+    });
+
+
+
+    // Semister Route here
+
+    Route::post('/semister/add-semister',function($request){
+        SemisterController::class::AddSemister($request);
+    });
+
+    Route::get('/semister/get-all',function(){
+        SemisterController::class::getSemisters();
+    });
+
 
 
     

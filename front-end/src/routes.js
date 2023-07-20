@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 /**
 =========================================================
 * Material Dashboard 2 React - v2.1.0
@@ -52,6 +53,10 @@ import AddDepertment from "layouts/department/AddDepertment";
 import Session from "layouts/session";
 import AddSession from "layouts/session/AddSession";
 import EditSession from "layouts/session/EditSession";
+import EditDepertment from 'layouts/department/EditDepertment'
+import Semister from "layouts/Semister/Semister";
+import AddSemister from 'layouts/Semister/AddSemister'
+
 
 const routes = [
   {
@@ -133,6 +138,25 @@ const routes = [
     route: "/profile",
     component: <Profile />,
   },
+  {
+    key: "edit-session",
+    route: "/depertment/edit/:id",
+    component: <EditDepertment />,
+
+  },
+  {
+    type: "collapse",
+    name: "Semister",
+    key: "semister",
+    icon: <Icon fontSize="small">person</Icon>,
+    route: "/semister",
+    component: <Semister />,
+  },
+  {
+    key: 'add-semister',
+    route: '/semister/add',
+    component: <AddSemister />
+  }
 ];
 
 export default routes;
