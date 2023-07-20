@@ -56,6 +56,7 @@ import EditSession from "layouts/session/EditSession";
 import EditDepertment from 'layouts/department/EditDepertment'
 import Semister from "layouts/Semister/Semister";
 import AddSemister from 'layouts/Semister/AddSemister'
+import EditSemister from 'layouts/Semister/EditSemister'
 
 
 const routes = [
@@ -156,6 +157,11 @@ const routes = [
     key: 'add-semister',
     route: '/semister/add',
     component: <AddSemister />
+  },
+  {
+    key: 'edit-semister',
+    route: '/semister/edit/:id',
+    component: <EditSemister />
   }
 ];
 

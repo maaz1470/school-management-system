@@ -70,7 +70,7 @@ export default function data() {
         name: <Title name={el.name} />,
         action: (
           <>
-            <Link to={`/depertment/edit/${el.id}`}>
+            <Link to={`/semister/edit/${el.id}`}>
               <MDTypography component="span" variant="caption" color="text" fontWeight="medium" style={{
                 marginRight: '5px',
                 cursor: 'pointer'
