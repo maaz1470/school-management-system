@@ -42,7 +42,19 @@ export default function EditSemister(){
 
     useEffect(() => {
         axios.get(`/semister/get-data/${id}`).then(response => {
-            console.log(response)
+            if(response){
+                if(response.data.status === 200){
+                    setSemister({
+                        ...semister,
+                        name: response.data.semister.name ?? ''
+                    })
+                    setLoading(false)
+                }else if(response.data.status === 500){
+                    Swal.fire('Error',response.data.message,'error');
+                }else{
+                    Swal.fire('Error','Something went wrong. Please try again.');
+                }
+            }
         });
     },[id]);
 
@@ -51,15 +63,12 @@ export default function EditSemister(){
         const data = new FormData();
 
         data.append('name',semister.name);
+        data.append('id',id);
 
-        axios.post('/semister/add-semister',data).then(response => {
+        axios.post('/semister/update-semister',data).then(response => {
             if(response){
                 if(response.data.status === 200){
                     Swal.fire('Success',response.data.message,'success')
-                    setSemister({
-                        ...semister,
-                        name: ''
-                    })
                 }else if(response.data.status === 401){
                     Swal.fire('Error',response.data.message,'error');
                 }else{

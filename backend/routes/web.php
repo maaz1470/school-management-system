@@ -99,6 +99,18 @@ use App\Http\Controllers\SessionController;
         SemisterController::class::getSemisters();
     });
 
+    Route::get('/semister/get-data/$id',function($id){
+        SemisterController::class::editSemister($id);
+    });
+
+    Route::post('/semister/update-semister',function($data){
+        SemisterController::class::updateSemister($data);
+    });
+
+    Route::get('/semister/delete/$id',function($id){
+        SemisterController::class::deleteSemister($id);
+    });
+
 
 
     

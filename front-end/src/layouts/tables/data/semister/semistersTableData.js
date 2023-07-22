@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 /* eslint-disable arrow-body-style */
 /* eslint-disable react/prop-types */
 /* eslint-disable react/function-component-definition */
@@ -39,13 +40,12 @@ export default function data() {
       });
       return () => setSemister([]);
     },[])
-
-    console.log(semister)
+ 
   
-    const deleteDepertment = (e,id) => {
+    const deleteSemister = (e,id) => {
       e.preventDefault();
       
-      axios.get(`/depertment-delete/${id}`).then(response => {
+      axios.get(`/semister/delete/${id}`).then(response => {
         if(response){
           if(response.data.status === 200){
             Swal.fire('Success', response.data.message,'success');
@@ -53,6 +53,8 @@ export default function data() {
           }else if(response.data.status === 404){
             Swal.fire('404',response.data.message,'error')
           }else if(response.data.status === 401){
+            Swal.fire('Error',response.data.message,'error')
+          }else if(response.data.status === 500){
             Swal.fire('Error',response.data.message,'error')
           }else{
             Swal.fire('Error','Soemthing went wrong. Please try again.','error')
@@ -77,7 +79,7 @@ export default function data() {
               }}>Edit</MDTypography>
             </Link>
               
-            <MDTypography onClick={(e) => deleteDepertment(e,el.id)} component="span" variant="caption" color="text" fontWeight="medium" style={{
+            <MDTypography onClick={(e) => deleteSemister(e,el.id)} component="span" variant="caption" color="text" fontWeight="medium" style={{
               cursor: 'pointer'
             }}>
               Delete
